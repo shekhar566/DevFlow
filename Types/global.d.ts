@@ -20,3 +20,19 @@ interface Question {
   views: number;
   createdAt: Date;
 }
+
+type ActionResponse<T = null> = {
+  success: boolean;
+  data?: T;
+  error?: {
+    message: string;
+    details?: Record<string, string[]>;
+  };
+  status?: number;
+};
+
+type SuccessResponce<T = null> = ActionResponse<T> & { success: true };
+type ErrorResponce = ActionResponse<undefined> & { success: false };
+
+type APIErrorResponce = NextResponse<ErrorResponce>;
+type APIResponce<T = null> = NextResponse<SuccessResponce<T> | ErrorResponce>;
