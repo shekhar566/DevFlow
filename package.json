@@ -37,6 +37,7 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.57.0",
     "shadcn": "^2.6.0",
+    "slugify": "^1.6.6",
     "tailwind-merge": "^3.3.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.25.51"
