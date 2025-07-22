@@ -33,5 +33,11 @@
     "next-env.d.ts": true
     // "**/.DS_Store": true,
     // "**/Thumbs.db": true
-  }
+  },
+  "mdb.presetConnections": [
+    {
+      "name": "Preset Connection",
+      "connectionString": "mongodb://localhost:27017"
+    }
+  ]
 }

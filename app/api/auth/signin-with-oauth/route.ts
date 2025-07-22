@@ -81,7 +81,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
     await session.abortTransaction();
-    return handleError(error, "api") as APIErrorResponce;
+    return handleError(error, "api") as APIErrorResponse;
   } finally {
     session.endSession();
   }

@@ -4,7 +4,6 @@ import ROUTES from "@/constants/routes";
 import Link from "next/link";
 import HomeFilter from "@/components/filter/HomeFilter";
 import QuestionCard from "@/components/cards/QuestionCard";
-import { auth } from "@/auth";
 
 const questions = [
   {
@@ -53,10 +52,6 @@ interface SearchParams {
 }
 
 const Home = async ({ searchParams }: SearchParams) => {
-  const session = await auth();
-
-  console.log("Session", session);
-
   const { query = "", filter } = await searchParams;
 
   const filteredQuestions = questions.filter((question) => {

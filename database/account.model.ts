@@ -4,7 +4,8 @@ export interface IAccount {
   userId: Types.ObjectId;
   name: string;
   image?: string;
-  password: string;
+  password?: string;
+  provider: string;
   providerAccountId: string;
 }
 
@@ -15,6 +16,7 @@ const AccountSchema = new Schema<IAccount>(
     name: { type: String, require: true },
     image: { type: String, require: true },
     password: { type: String },
+    provider: { type: String, required: true },
     providerAccountId: { type: String, require: true },
   },
   { timestamps: true }

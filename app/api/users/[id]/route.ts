@@ -21,7 +21,7 @@ export async function GET(
 
     return NextResponse.json({ success: true, data: user }, { status: 200 });
   } catch (error) {
-    return handleError(error, "api") as APIErrorResponce;
+    return handleError(error, "api") as APIErrorResponse;
   }
 }
 
@@ -41,7 +41,7 @@ export async function DELETE(
 
     return NextResponse.json({ success: true, data: user }, { status: 200 });
   } catch (error) {
-    return handleError(error, "api") as APIErrorResponce;
+    return handleError(error, "api") as APIErrorResponse;
   }
 }
 
@@ -68,6 +68,6 @@ export async function PUT(
       { status: 200 }
     );
   } catch (error) {
-    return handleError(error, "api") as APIErrorResponce;
+    return handleError(error, "api") as APIErrorResponse;
   }
 }
