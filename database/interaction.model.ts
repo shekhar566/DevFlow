@@ -10,10 +10,10 @@ export interface IInteraction {
 export interface IInteractionDoc extends IInteraction, Document {}
 const InteractionSchema = new Schema<IInteraction>(
   {
-    user: { type: Schema.Types.ObjectId, ref: "User", require: true },
-    action: { type: String, require: true },
-    actionId: { type: Schema.Types.ObjectId, require: true },
-    actionType: { type: String, enum: ["questions", "answer"], require: true },
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    action: { type: String, required: true },
+    actionId: { type: Schema.Types.ObjectId, required: true },
+    actionType: { type: String, enum: ["questions", "answer"], required: true },
   },
   { timestamps: true }
 );

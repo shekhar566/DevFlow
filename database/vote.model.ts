@@ -11,8 +11,8 @@ const VoteSchema = new Schema<IVote>(
   {
     author: { type: Schema.Types.ObjectId, ref: "User", require: true },
     id: { type: Schema.Types.ObjectId, require: true },
-    actiontype: { type: String, enum: ["questions", "answer"], require: true },
-    votetype: { type: String, enum: ["upvotes", "downvotes"], require: true },
+    actiontype: { type: String, enum: ["questions", "answer"], required: true },
+    votetype: { type: String, enum: ["upvotes", "downvotes"], required: true },
   },
   { timestamps: true }
 );

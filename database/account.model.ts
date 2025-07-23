@@ -12,12 +12,12 @@ export interface IAccount {
 export interface IAccountDoc extends IAccount, Document {}
 const AccountSchema = new Schema<IAccount>(
   {
-    userId: { type: Schema.Types.ObjectId, ref: "User", require: true },
-    name: { type: String, require: true },
-    image: { type: String, require: true },
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    name: { type: String, required: true },
+    image: { type: String, required: true },
     password: { type: String },
     provider: { type: String, required: true },
-    providerAccountId: { type: String, require: true },
+    providerAccountId: { type: String, required: true },
   },
   { timestamps: true }
 );
