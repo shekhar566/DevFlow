@@ -8,7 +8,7 @@ export interface ITagDoc extends ITag, Document {}
 const TagSchema = new Schema<ITag>(
   {
     name: { type: String, required: true, unique: true },
-    question: { type: Number, required: true, default: 0 },
+    question: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

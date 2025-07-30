@@ -43,7 +43,7 @@ const QuestionCard = ({
           value={author.name}
           title={`• asked ${getTimeStamp(createdAt)}`}
           href={ROUTES.PROFILE(author._id)}
-          textStyle="body-medium text-dark400_light700"
+          textStyles="body-medium text-dark400_light700"
           isAuthor
         />
 
@@ -56,7 +56,7 @@ const QuestionCard = ({
             alt="like"
             value={upvotes}
             title=" Votes"
-            textStyle="small-medium text-dark400_light800"
+            textStyles="small-medium text-dark400_light800"
           />
 
           <Metric
@@ -64,7 +64,7 @@ const QuestionCard = ({
             alt="answers"
             value={answers}
             title=" Answers"
-            textStyle="small-medium text-dark400_light800"
+            textStyles="small-medium text-dark400_light800"
           />
 
           <Metric
@@ -72,7 +72,7 @@ const QuestionCard = ({
             alt="views"
             value={views}
             title=" Views"
-            textStyle="small-medium text-dark400_light800"
+            textStyles="small-medium text-dark400_light800"
           />
         </div>
       </div>

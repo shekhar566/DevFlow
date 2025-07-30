@@ -3,7 +3,7 @@ import { model, models, Schema, Types, Document } from "mongoose";
 export interface IQuestion {
   title: string;
   content: string;
-  tags: string;
+  tags: Types.ObjectId[];
   views: number;
   answers: number;
   upvotes: number;
@@ -25,6 +25,7 @@ const QuestionSchema = new Schema<IQuestion>(
   { timestamps: true }
 );
 
-const Question = models?.Account || model<IQuestion>("Account", QuestionSchema);
+const Question =
+  models?.Account || model<IQuestion>("Question", QuestionSchema);
 
 export default Question;
