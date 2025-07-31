@@ -15,18 +15,18 @@ import TagQuestion from "@/database/tag-question.model";
 export async function createQuestion(
   params: CreateQuestionParams
 ): Promise<ActionResponse<Question>> {
-  const validationsResult = await action({
+  const validationResult = await action({
     params,
     schema: AskQuestionSchema,
     authorize: true,
   });
 
-  if (validationsResult instanceof Error) {
-    return handleError(validationsResult) as ErrorResponse;
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
   }
 
-  const { title, content, tags } = validationsResult.params!;
-  const userId = validationsResult?.session?.user?.id;
+  const { title, content, tags } = validationResult.params!;
+  const userId = validationResult?.session?.user?.id;
 
   const session = await mongoose.startSession();
   session.startTransaction();
@@ -82,18 +82,18 @@ export async function createQuestion(
 export async function editQuestion(
   params: EditQuestionParams
 ): Promise<ActionResponse<IQuestionDoc>> {
-  const validationsResult = await action({
+  const validationResult = await action({
     params,
     schema: EditQuestionSchema,
     authorize: true,
   });
 
-  if (validationsResult instanceof Error) {
-    return handleError(validationsResult) as ErrorResponse;
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
   }
 
-  const { title, content, tags, questionId } = validationsResult.params!;
-  const userId = validationsResult?.session?.user?.id;
+  const { title, content, tags, questionId } = validationResult.params!;
+  const userId = validationResult?.session?.user?.id;
 
   const session = await mongoose.startSession();
   session.startTransaction();
@@ -188,17 +188,17 @@ export async function editQuestion(
 export async function getQuestion(
   params: GetQuestionParams
 ): Promise<ActionResponse<Question>> {
-  const validationsResult = await action({
+  const validationResult = await action({
     params,
     schema: GetQuestionSchema,
     authorize: true,
   });
 
-  if (validationsResult instanceof Error) {
-    return handleError(validationsResult) as ErrorResponse;
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
   }
 
-  const { questionId } = validationsResult.params!;
+  const { questionId } = validationResult.params!;
 
   try {
     const question = await Question.findById(questionId).populate("tags");
