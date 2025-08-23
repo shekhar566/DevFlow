@@ -8,6 +8,7 @@ import { formatNumber, getTimeStamp } from "@/lib/utils";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
+import View from "../view";
 
 const QuestionDetails = async ({ params }: RouteParams) => {
   const { id } = await params;
@@ -20,6 +21,7 @@ const QuestionDetails = async ({ params }: RouteParams) => {
   const { author, createdAt, answers, views, tags, content, title } = question;
   return (
     <>
+      <View questionId={id} />
       <div className="flex-start w-full flex-col">
         <div
           className="flex w-full flex flex-col-reverse
