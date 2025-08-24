@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { AnswerSchema } from "@/lib/validations";
-import { useRef, useState } from "react";
+import { useRef, useState, useTransition } from "react";
 // import Editor from "../editor";
 import { MDXEditorMethods } from "@mdxeditor/editor";
 import dynamic from "next/dynamic";
@@ -28,7 +28,7 @@ const Editor = dynamic(() => import("@/components/editor"), {
 });
 
 const AnswerForm = ({ questionId }: { questionId: string }) => {
-  const [isAnswering, startAnsweringTrasition] = useTrasition();
+  const [isAnswering, startAnsweringTrasition] = useTransition();
   const [isAISubmitting, setIsAISubmitting] = useState(false);
 
   const editorRef = useRef<MDXEditorMethods>(null);
