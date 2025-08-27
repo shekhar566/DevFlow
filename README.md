@@ -18,7 +18,7 @@ A brief description of what your project does and who it's for.
 ## 📸 Screenshots
 
 ### Dashboard
-![Dashboard Screenshot](app/Sshots/Home.png)
+![Dashboard Screenshot]public/images/default-logo.svg
 
 
 ### Login Page
