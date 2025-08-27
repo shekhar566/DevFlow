@@ -19,6 +19,7 @@ A brief description of what your project does and who it's for.
 
 ### Dashboard
 ![Logo](public/images/default-logo.svg)
+![Image](public/images/light-error.png)
 
 
 
