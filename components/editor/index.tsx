@@ -46,7 +46,7 @@ const Editor = ({ value, editorRef, fieldChange, ...props }: Props) => {
   const theme = resolvedTheme === "dark" ? [basicDark] : [];
   return (
     <MDXEditor
-      key={resolvedTheme}
+      // key={resolvedTheme}
       markdown={value}
       ref={editorRef}
       className="background-light800_dark200 light-border-2
