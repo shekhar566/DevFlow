@@ -35,10 +35,10 @@ DevFlow is a **modern StackOverflow-style Q&A platform** built for developers, f
 
 ## 📸 Screenshots
 
-![Dashboard Screenshot](app/Sshort/HomePage.png)  
-![Sign-up Screenshot](app/Sshort/Sign-up.png)
-![Ask-Question Screenshot](app/Sshort/Ask_Questions.png)
-![Answers Page](app/Sshort/Answerss.png)
+![Dashboard Screenshot](app/Public/images/HomePage.png)  
+![Sign-up Screenshot](app/Public/images/Sign-up.png)
+![Ask-Question Screenshot](app/Public/images/Ask_Questions.png)
+![Answers Page](appPublic/images/Answerss.png)
 
 
 
