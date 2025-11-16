@@ -10,7 +10,7 @@ interface Params {
   targetType: "question" | "answer";
   targetId: string;
   upvotes: number;
-  downvote: number;
+  downvotes: number;
   hasVotedPromise: Promise<ActionResponse<HasVotedResponse>>;
 }
 
@@ -18,7 +18,7 @@ const Votes = ({
   targetType,
   targetId,
   upvotes,
-  downvote,
+  downvotes,
   hasVotedPromise,
 }: Params) => {
   const session = useSession();
@@ -78,7 +78,7 @@ const Votes = ({
       <div className="flex-center gap-1.5">
         <Image
           src={
-            success && hasUpvoted ? "/icons/upvoted.svg" : "/icons/upvotes.svg"
+            success && hasUpvoted ? "/icons/upvoted.svg" : "/icons/upvote.svg"
           }
           width={18}
           height={18}
@@ -90,7 +90,7 @@ const Votes = ({
 
         <div className="flex-center backgroud-light700_dark400 min-w-5 rounded-sm p-1">
           <p className="subtle-medium text-dark400_light900">
-            {formatNumber(downvote)}
+            {formatNumber(upvotes)}
           </p>
         </div>
       </div>
@@ -112,7 +112,7 @@ const Votes = ({
 
         <div className="flex-center backgroud-light700_dark400 min-w-5 rounded-sm p-1">
           <p className="subtle-medium text-dark400_light900">
-            {formatNumber(upvotes)}
+            {formatNumber(downvotes)}
           </p>
         </div>
       </div>
