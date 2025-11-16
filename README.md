@@ -1,4 +1,4 @@
-![DevFLow](public/images/DevFlow.png)  
+![DevFlow](/public/images/DevFlow.png)
 <p align="center">
   <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&style=flat-square" />
   <img src="https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&style=flat-square" />
