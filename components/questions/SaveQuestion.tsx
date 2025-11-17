@@ -1,14 +1,24 @@
 "use client";
 
 import { toast } from "@/hooks/use-toast";
-import { toggleSaveqQuestion } from "@/lib/actions/collection.action";
+import { toggleSaveQuestion } from "@/lib/actions/collection.action";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useState } from "react";
+import { use, useState } from "react";
 
-const SaveQuestion = ({ questionId }: { questionId: string }) => {
+const SaveQuestion = ({
+  questionId,
+  hasSavedQuestionPromise,
+}: {
+  questionId: string;
+  hasSavedQuestionPromise: Promise<ActionResponse<{ saved: boolean }>>;
+}) => {
   const session = useSession();
   const userId = session?.data?.user?.id;
+
+  const { data } = use(hasSavedQuestionPromise);
+
+  const { saved: hasSaved } = data || {};
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,7 +33,7 @@ const SaveQuestion = ({ questionId }: { questionId: string }) => {
     setIsLoading(true);
 
     try {
-      const { success, data, error } = await toggleSaveqQuestion({
+      const { success, data, error } = await toggleSaveQuestion({
         questionId,
       });
 
@@ -40,11 +50,9 @@ const SaveQuestion = ({ questionId }: { questionId: string }) => {
         variant: "destructive",
       });
     } finally {
-      setIsLoading(true);
+      setIsLoading(false);
     }
   };
-
-  const hasSaved = false;
 
   return (
     <Image

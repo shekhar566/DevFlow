@@ -3,25 +3,25 @@
 import { Collection, Question } from "@/database";
 import action from "../handlers/action";
 import handleError from "../handlers/error";
-import { CollectionBaseShcema } from "../validations";
+import { CollectionBaseSchema } from "../validations";
 import { revalidatePath } from "next/cache";
 import ROUTES from "@/constants/routes";
 
-export async function toggleSaveqQuestion(
+export async function toggleSaveQuestion(
   params: CollectionBaseParams
 ): Promise<ActionResponse<{ saved: boolean }>> {
-  const ValidationResult = await action({
+  const validationResult = await action({
     params,
-    schema: CollectionBaseShcema,
+    schema: CollectionBaseSchema,
     authorize: true,
   });
 
-  if (ValidationResult instanceof Error) {
-    return handleError(ValidationResult) as ErrorResponse;
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
   }
 
-  const { questionId } = ValidationResult.params!;
-  const userId = ValidationResult.session?.user?.id;
+  const { questionId } = validationResult.params!;
+  const userId = validationResult.session?.user?.id;
 
   try {
     const question = await Question.findById(questionId);
@@ -32,8 +32,10 @@ export async function toggleSaveqQuestion(
       author: userId,
     });
 
-    if (!collection) {
-      await Collection.findByIdAndDelete(collection.id);
+    if (collection) {
+      await Collection.findByIdAndDelete(collection._id);
+
+      revalidatePath(ROUTES.QUESTION(questionId));
 
       return {
         success: true,
@@ -54,6 +56,39 @@ export async function toggleSaveqQuestion(
       success: true,
       data: {
         saved: true,
+      },
+    };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
+  }
+}
+
+export async function hasSavedQuestion(
+  params: CollectionBaseParams
+): Promise<ActionResponse<{ saved: boolean }>> {
+  const ValidationResult = await action({
+    params,
+    schema: CollectionBaseSchema,
+    authorize: true,
+  });
+
+  if (ValidationResult instanceof Error) {
+    return handleError(ValidationResult) as ErrorResponse;
+  }
+
+  const { questionId } = ValidationResult.params!;
+  const userId = ValidationResult.session?.user?.id;
+
+  try {
+    const collection = await Collection.findOne({
+      question: questionId,
+      author: userId,
+    });
+
+    return {
+      success: true,
+      data: {
+        saved: !!collection,
       },
     };
   } catch (error) {

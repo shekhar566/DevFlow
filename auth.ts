@@ -7,6 +7,7 @@ import { SignInSchema } from "./lib/validations";
 import { IUserDoc } from "./database/user.model";
 import bcrypt from "bcryptjs";
 import Credentials from "next-auth/providers/credentials";
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     GitHub,
