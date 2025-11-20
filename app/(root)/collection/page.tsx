@@ -6,6 +6,8 @@ import DataRenderer from "@/components/DataRenderer";
 import { EMPTY_QUESTION } from "@/constants/states";
 import { getSavedQuestion } from "@/lib/actions/collection.action";
 import ROUTES from "@/constants/routes";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 interface SearchParams {
   searchParams: Promise<{ [key: string]: string }>;
@@ -16,9 +18,15 @@ const Collection = async ({ searchParams }: SearchParams) => {
   const { success, data, error } = await getSavedQuestion({
     page: Number(page) || 1,
     pageSize: Number(pageSize) || 10,
-    query: query || "",
-    filter: filter || "",
+    query,
+    filter,
   });
+
+  const loggedInUser = await auth();
+
+  if (!loggedInUser) {
+    redirect(ROUTES.SIGN_IN);
+  }
 
   const { collection } = data || {};
 
