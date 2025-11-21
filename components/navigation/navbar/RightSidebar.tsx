@@ -9,12 +9,11 @@ import Link from "next/link";
 import React from "react";
 
 const RightSidebar = async () => {
-  const { success, data: hotQuestions, error } = await getHotQuestion();
-  const {
-    success: tagSuccess,
-    data: tags,
-    error: tagError,
-  } = await getTopTag();
+  const [
+    { success, data: hotQuestions, error },
+    { success: tagSuccess, data: tags, error: tagError },
+  ] = await Promise.all([getHotQuestion(), getTopTag()]);
+
   return (
     <section
       className="pt-36 custom-scrollbar
