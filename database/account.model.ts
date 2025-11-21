@@ -14,7 +14,7 @@ const AccountSchema = new Schema<IAccount>(
   {
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     name: { type: String, required: true },
-    image: { type: String, required: true },
+    image: { type: String },
     password: { type: String },
     provider: { type: String, required: true },
     providerAccountId: { type: String, required: true },

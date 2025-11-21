@@ -10,6 +10,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import CommonFilter from "@/components/filter/CommonFilter";
 import { CollectionFilters } from "@/constants/filters";
+import Pagination from "@/components/Pagination";
 
 interface SearchParams {
   searchParams: Promise<{ [key: string]: string }>;
@@ -30,7 +31,7 @@ const Collection = async ({ searchParams }: SearchParams) => {
     redirect(ROUTES.SIGN_IN);
   }
 
-  const { collection } = data || {};
+  const { collection, isNext } = data || {};
 
   return (
     <>
@@ -62,6 +63,7 @@ const Collection = async ({ searchParams }: SearchParams) => {
           </div>
         )}
       />
+      <Pagination page={page} isNext={isNext || false} />
     </>
   );
 };
