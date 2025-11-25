@@ -19,7 +19,7 @@ const Theme = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="ghost" size="icon">
           <Image
             src="/icons/sun.svg"
             alt="sun icon"
