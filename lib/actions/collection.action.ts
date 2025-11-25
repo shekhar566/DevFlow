@@ -100,7 +100,7 @@ export async function hasSavedQuestion(
   }
 }
 
-export async function getSavedQuestion(
+export async function getSavedQuestions(
   params: PaginatedSearchParams
 ): Promise<ActionResponse<{ collection: Collection[]; isNext: boolean }>> {
   const validationResult = await action({
@@ -154,12 +154,12 @@ export async function getSavedQuestion(
         },
       },
       {
-        $unwind: "$question",
+        $unwind: "$question.author",
       },
       {
         $lookup: {
           from: "tags",
-          localField: "tag.author",
+          localField: "question.tags",
           foreignField: "_id",
           as: "question.tags",
         },

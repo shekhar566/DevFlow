@@ -20,8 +20,6 @@ const Tags = async ({ searchParams }: RouteParams) => {
 
   const { tags, isNext } = data || {};
 
-  console.log("TAGS", JSON.stringify(tags, null, 2));
-
   return (
     <>
       <h1 className="h1-bold text-dark100_light900 text-3xl">Tags</h1>
@@ -30,7 +28,7 @@ const Tags = async ({ searchParams }: RouteParams) => {
         <LocalSearch
           route={ROUTES.TAGS}
           imgSrc="/icons/search.svg"
-          placeholder="Search by tags..."
+          placeholder="Search tags..."
           otherClasses="flex-1"
         />
 

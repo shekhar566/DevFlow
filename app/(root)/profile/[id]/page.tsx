@@ -133,7 +133,7 @@ const Profile = async ({ params, searchParams }: RouteParams) => {
               empty={EMPTY_QUESTION}
               success={userQuestionsSuccess}
               error={userQuestionsError}
-              render={(hotQuestions) => (
+              render={(questions) => (
                 <div className="flex w-full flex-col gap-6">
                   {questions.map((question) => (
                     <QuestionCard key={question._id} question={question} />

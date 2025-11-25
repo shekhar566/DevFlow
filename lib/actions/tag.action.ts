@@ -120,7 +120,7 @@ export const getTagQuestions = async (
       .skip(skip)
       .limit(limit);
 
-    const isNext = totalQuestions > skip + Question.length;
+    const isNext = totalQuestions > skip + questions.length;
 
     return {
       success: true,

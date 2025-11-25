@@ -33,7 +33,7 @@ const LocalSearch = ({
         const newUrl = formUrlQuery({
           params: searchParams.toString(),
           key: "query",
-          value: "searchQuery",
+          value: searchQuery,
         });
         router.push(newUrl, { scroll: false });
       } else {

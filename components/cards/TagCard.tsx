@@ -48,13 +48,14 @@ const TagCard = ({
             src="/icons/close.svg"
             width={12}
             height={12}
-            alt="Close icon"
+            alt="close icon"
             className="cursor-pointer object-contain invert-0
             dark:invert"
             onClick={handleRemove}
           />
         )}
       </Badge>
+
       {showCount && (
         <p className="small-medium text-dark500_light700">{questions}</p>
       )}

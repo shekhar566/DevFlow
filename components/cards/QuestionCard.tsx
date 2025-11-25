@@ -3,7 +3,7 @@ import { getTimeStamp } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 import TagCard from "./TagCard";
-import Metric from "../Metric";
+import Metric from "@/components/Metric";
 
 interface Props {
   question: Question;
@@ -44,7 +44,7 @@ const QuestionCard = ({
           title={`• asked ${getTimeStamp(createdAt)}`}
           href={ROUTES.PROFILE(author._id)}
           textStyles="body-medium text-dark400_light700"
-          isAuthor
+          // isAuthor
           titleStyles="max-sm:hidden"
         />
 

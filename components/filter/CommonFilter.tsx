@@ -49,7 +49,7 @@ const CommonFilter = ({
       >
         <SelectTrigger
           className={cn(
-            "body-regular no-focus light-border background-light800_dark300 text-dark500_light700 border px-5 py-2.5",
+            "body-regular no-focus light-border background-light800_dark300 cursor-pointer text-dark500_light700 border px-5 py-2.5",
             otherClasses
           )}
           aria-label="Filter options"
@@ -62,7 +62,11 @@ const CommonFilter = ({
         <SelectContent>
           <SelectGroup>
             {filters.map((item) => (
-              <SelectItem key={item.value} value={item.value}>
+              <SelectItem
+                key={item.value}
+                value={item.value}
+                className="cursor-pointer"
+              >
                 {item.name}
               </SelectItem>
             ))}

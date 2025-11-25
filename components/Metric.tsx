@@ -11,7 +11,6 @@ interface Props {
   href?: string;
   textStyles: string;
   imgStyles?: string;
-  isAuthor?: boolean;
   titleStyles?: string;
 }
 

@@ -28,7 +28,7 @@ const AllAnswers = ({
         <CommonFilter
           filters={AnswerFilters}
           otherClasses="sm:min-w-32"
-          containerClasses="max-xs: w-full"
+          containerClasses="max-xs:w-full"
         />
       </div>
 

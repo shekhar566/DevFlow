@@ -21,7 +21,7 @@ const UserAvatar = ({
   fallbackClassName,
 }: Props) => {
   const initials = name
-    ?.split(" ")
+    .split(" ")
     .map((word: string) => word[0])
     .join("")
     .toUpperCase()

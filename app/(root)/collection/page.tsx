@@ -4,7 +4,7 @@ import QuestionCard from "@/components/cards/QuestionCard";
 
 import DataRenderer from "@/components/DataRenderer";
 import { EMPTY_QUESTION } from "@/constants/states";
-import { getSavedQuestion } from "@/lib/actions/collection.action";
+import { getSavedQuestions } from "@/lib/actions/collection.action";
 import ROUTES from "@/constants/routes";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
@@ -18,7 +18,7 @@ interface SearchParams {
 const Collection = async ({ searchParams }: SearchParams) => {
   const { page, pageSize, query, filter } = await searchParams;
 
-  const { success, data, error } = await getSavedQuestion({
+  const { success, data, error } = await getSavedQuestions({
     page: Number(page) || 1,
     pageSize: Number(pageSize) || 10,
     query,
