@@ -1,4 +1,4 @@
-import { techMap } from "@/constants/TechMap";
+import { techMap } from "@/constants/techMap";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -51,6 +51,7 @@ export const getDeviconClassName = (techName: string) => {
 export const getTimeStamp = (createdAt: Date) => {
   const date = new Date(createdAt);
   const now = new Date();
+
   const secondsAgo = Math.floor((now.getTime() - date.getTime()) / 1000);
 
   const units = [

@@ -1,4 +1,3 @@
-// import TagCard from "@/components/cards/TagCard";
 import TagCard from "@/components/cards/TagCard";
 import DataRenderer from "@/components/DataRenderer";
 import ROUTES from "@/constants/routes";
