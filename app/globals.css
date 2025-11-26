@@ -416,3 +416,12 @@ code {
   display: grid !important; /* Apply grid only if it's visible */
   width: 100% !important;
 }
+
+/* Fix dialog positioning without breaking design */
+[data-radix-dialog-content] {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 999999 !important;
+}
