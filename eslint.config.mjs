@@ -16,9 +16,12 @@ export default [
     "next/core-web-vitals",
     "next/typescript",
     "standard",
-    // "plugin:tailwindcss/recommended",
+    "plugin:tailwindcss/recommended",
     "prettier"
   ),
+  // {
+  //   ignores: ["components/ui/**"],
+  // },
   {
     rules: {
       "no-undef": "off",

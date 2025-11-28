@@ -33,7 +33,12 @@ const Page = async ({ searchParams }: RouteParams) => {
         {jobs?.length > 0 ? (
           jobs
             ?.filter((job: Job) => job.job_title)
-            .map((job: Job) => <JobCard key={job.id} job={job} />)
+            .map((job: Job, index: number) => (
+              <JobCard
+                key={job.job_id || job.job_google_link || index}
+                job={job}
+              />
+            ))
         ) : (
           <div className="paragraph-regular text-dark200_light800 w-full text-center">
             Oops! We couldn&apos;t find any jobs at the moment. Please try again
