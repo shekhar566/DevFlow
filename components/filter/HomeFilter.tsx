@@ -7,12 +7,10 @@ import { cn } from "@/lib/utils";
 import { formUrlQuery, removeKeysFromUrlQuery } from "@/lib/url";
 
 const filters = [
-  { name: "React", value: "react" },
-  { name: "JavaScript", value: "javascript" },
-  // { name: "Newest", value: "newest" },
-  // { name: "Popular", value: "polular" },
-  // { name: "Unanwsered", value: "unanwsered" },
-  // { name: "Recommeded", value: "recommeded" },
+  { name: "Newest", value: "newest" },
+  { name: "Popular", value: "polular" },
+  { name: "Unanwsered", value: "unanwsered" },
+  { name: "Recommeded", value: "recommended" },
 ];
 
 const HomeFilter = () => {
@@ -26,12 +24,14 @@ const HomeFilter = () => {
 
     if (filter === active) {
       setActive("");
+
       newUrl = removeKeysFromUrlQuery({
         params: searchParams.toString(),
         keysToRemove: ["filter"],
       });
     } else {
       setActive(filter);
+
       newUrl = formUrlQuery({
         params: searchParams.toString(),
         key: "filter",
