@@ -19,9 +19,9 @@ export default [
     "plugin:tailwindcss/recommended",
     "prettier"
   ),
-  // {
-  //   ignores: ["components/ui/**"],
-  // },
+  {
+    ignores: ["components/ui/**"],
+  },
   {
     rules: {
       "no-undef": "off",
