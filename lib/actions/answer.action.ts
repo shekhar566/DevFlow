@@ -12,6 +12,8 @@ import mongoose from "mongoose";
 import { Question, Vote } from "@/database";
 import { revalidatePath } from "next/cache";
 import ROUTES from "@/constants/routes";
+import { after } from "next/server";
+import { createInteraction } from "./interaction.action";
 
 export async function createAnswer(
   params: CreateAnswerParams
@@ -53,6 +55,15 @@ export async function createAnswer(
     question.answer += 1;
     await question.save({ session });
 
+    // log the interaction
+    after(async () => {
+      await createInteraction({
+        action: "post",
+        actionId: newAnswer._id.toString(),
+        actionTarget: "answer",
+        authorId: userId as string,
+      });
+    });
     await session.commitTransaction();
 
     revalidatePath(ROUTES.QUESTION(questionId));
