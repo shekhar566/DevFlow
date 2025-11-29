@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
-import GitHub from "next-auth/providers/github";
-import Google from "next-auth/providers/google";
+import gitHub from "next-auth/providers/github";
+import google from "next-auth/providers/google";
 import { api } from "./lib/api";
 import { IAccountDoc } from "./database/account.model";
 import { SignInSchema } from "./lib/validations";
@@ -10,8 +10,8 @@ import Credentials from "next-auth/providers/credentials";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
-    GitHub,
-    Google,
+    gitHub,
+    google,
     Credentials({
       async authorize(credentials) {
         const validatedFields = SignInSchema.safeParse(credentials);
@@ -76,22 +76,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async signIn({ user, profile, account }) {
       if (account?.type === "credentials") return true;
-      if (!account || !user) return false;
-
+      if (account?.type === "oauth" && user?.email) return true;
       const userInfo = {
         name: user.name!,
         email: user.email!,
         image: user.image!,
         username:
-          account.provider === "github"
+          account?.provider === "github"
             ? (profile?.login as string)
             : (user.name?.toLowerCase() as string),
       };
 
       const { success } = (await api.auth.oAuthSignIn({
         user: userInfo,
-        provider: account.provider as "github" | "google",
-        providerAccountId: account.providerAccountId,
+        provider: account?.provider as "github" | "google",
+        providerAccountId: account?.providerAccountId || "",
       })) as ActionResponse;
 
       if (!success) return false;
