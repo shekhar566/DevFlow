@@ -5,7 +5,8 @@ import { fetchHandler } from "./handlers/fetch";
 import ROUTES from "@/constants/routes";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000/api";
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  "https://dev-overflow-two-bay.vercel.app/api";
 
 export const api = {
   auth: {
