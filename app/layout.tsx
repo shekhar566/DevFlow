@@ -6,6 +6,7 @@ import "./globals.css";
 import { auth } from "@/auth";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "next-themes";
+import TopLoader from "@/components/ui/top-loader";
 
 const inter = localFont({
   src: "./fonts/InterVF.ttf",
@@ -110,6 +111,7 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
             enableSystem
             disableTransitionOnChange
           >
+            <TopLoader />
             {children}
           </ThemeProvider>
           <Toaster />

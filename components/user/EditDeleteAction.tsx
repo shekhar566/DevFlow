@@ -26,7 +26,7 @@ const EditDeleteAction = ({ type, itemId }: Props) => {
   const router = useRouter();
 
   const handleEdit = async () => {
-    router.push(`/questions/${itemId}/edit`);
+    router.push(`/question/${itemId}/apply`);
   };
 
   const handleDelete = async () => {
