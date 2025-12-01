@@ -118,10 +118,7 @@ export async function editQuestion(
 
   try {
     const question = await Question.findById(questionId).populate("tags");
-
-    if (!question) {
-      throw new Error("Question not found");
-    }
+    if (!question) throw new Error("Question not found");
 
     if (question.author.toString() !== userId) {
       throw new Error("You are not authorized to edit this question");
@@ -133,6 +130,7 @@ export async function editQuestion(
       await question.save({ session });
     }
 
+    // Determine tags to add and remove
     const tagsToAdd = tags.filter(
       (tag) =>
         !question.tags.some(
@@ -145,27 +143,24 @@ export async function editQuestion(
         !tags.some((t) => t.toLowerCase() === tag.name.toLowerCase())
     );
 
+    // Add new tags
     const newTagDocuments = [];
-
     if (tagsToAdd.length > 0) {
       for (const tag of tagsToAdd) {
-        const existingTag = await Tag.findOneAndUpdate(
+        const newTag = await Tag.findOneAndUpdate(
           { name: { $regex: `^${tag}$`, $options: "i" } },
           { $setOnInsert: { name: tag }, $inc: { questions: 1 } },
           { upsert: true, new: true, session }
         );
 
-        if (existingTag) {
-          newTagDocuments.push({
-            tag: existingTag._id,
-            question: questionId,
-          });
-
-          question.tags.push(existingTag._id);
+        if (newTag) {
+          newTagDocuments.push({ tag: newTag._id, question: questionId });
+          question.tags.push(newTag._id);
         }
       }
     }
 
+    // Remove tags
     if (tagsToRemove.length > 0) {
       const tagIdsToRemove = tagsToRemove.map((tag: ITagDoc) => tag._id);
 
@@ -187,10 +182,13 @@ export async function editQuestion(
           )
       );
     }
+
+    // Insert new TagQuestion documents
     if (newTagDocuments.length > 0) {
       await TagQuestion.insertMany(newTagDocuments, { session });
     }
 
+    // Save the updated question
     await question.save({ session });
     await session.commitTransaction();
 
