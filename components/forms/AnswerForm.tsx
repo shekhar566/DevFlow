@@ -58,7 +58,7 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
 
         toast({
           title: "Success",
-          description: "Your answers has been posted successfully",
+          description: "Your answer has been posted successfully",
         });
 
         if (editorRef.current) {
@@ -99,9 +99,7 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
           variant: "destructive",
         });
       }
-      const answerText = typeof data === "string" ? data : (data?.data ?? "");
-
-      const formattedAnswer = answerText.replace(/<br>/g, " ").trim();
+      const formattedAnswer = data.replace(/<br>/g, " ").toString().trim();
 
       if (editorRef.current) {
         editorRef.current.setMarkdown(formattedAnswer);

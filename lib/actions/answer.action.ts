@@ -29,7 +29,7 @@ export async function createAnswer(
   }
 
   const { content, questionId } = validationResult.params!;
-  const userId = validationResult?.session?.user?.id;
+  const userId = validationResult.session?.user?.id;
 
   const session = await mongoose.startSession();
   session.startTransaction();
@@ -50,9 +50,9 @@ export async function createAnswer(
       { session }
     );
 
-    if (!newAnswer) throw new Error("Failed to create answer");
+    if (!newAnswer) throw new Error("Failed to create the answer");
 
-    question.answer += 1;
+    question.answers += 1;
     await question.save({ session });
 
     // log the interaction
@@ -108,10 +108,10 @@ export async function getAnswer(params: GetAnswersParams): Promise<
       sortCriteria = { createdAt: -1 };
       break;
     case "oldest":
-      sortCriteria = { createdAt: -1 };
+      sortCriteria = { createdAt: 1 };
       break;
     case "popular":
-      sortCriteria = { createdAt: -1 };
+      sortCriteria = { upvotes: -1 };
       break;
     default:
       sortCriteria = { createdAt: -1 };
@@ -142,7 +142,7 @@ export async function getAnswer(params: GetAnswersParams): Promise<
   }
 }
 
-export async function DeleteAnswer(
+export async function deleteAnswer(
   params: DeleteAnswerParams
 ): Promise<ActionResponse> {
   const validationResult = await action({
@@ -160,17 +160,30 @@ export async function DeleteAnswer(
 
   try {
     const answer = await Answer.findById(answerId);
-    if (!answer) throw new Error("You're not allowed to delete this answer");
+    if (!answer) throw new Error("Answer not found");
+
+    if (answer.author.toString() !== user?.id)
+      throw new Error("You're not allowed to delete this answer");
 
     await Question.findByIdAndUpdate(
       answer.question,
-      { $inc: { answer: -1 } },
+      { $inc: { answers: -1 } },
       { new: true }
     );
 
     await Vote.deleteMany({ actionId: answerId, actionType: "answer" });
 
     await Answer.findByIdAndDelete(answerId);
+
+    // log the interaction
+    after(async () => {
+      await createInteraction({
+        action: "delete",
+        actionId: answerId,
+        actionTarget: "answer",
+        authorId: user?.id as string,
+      });
+    });
 
     revalidatePath(`/profile/${user?.id}`);
 

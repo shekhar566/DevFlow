@@ -39,7 +39,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
   const editoraRef = useRef<MDXEditorMethods>(null);
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm({
+  const form = useForm<z.infer<typeof AskQuestionSchema>>({
     resolver: zodResolver(AskQuestionSchema),
     defaultValues: {
       title: question?.title || "",
@@ -52,6 +52,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
     e: React.KeyboardEvent<HTMLInputElement>,
     field: { value: string[] }
   ) => {
+    console.log(field, e);
     if (e.key === "Enter") {
       e.preventDefault();
       const tagInput = e.currentTarget.value.trim();
@@ -206,7 +207,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
                   />
                   {field.value.length > 0 && (
                     <div className="flex-start mt-2.5 flex-wrap gap-2.5">
-                      {field.value.map((tag: string) => (
+                      {field?.value?.map((tag: string) => (
                         <TagCard
                           key={tag}
                           _id={tag}
@@ -234,7 +235,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
           <Button
             type="submit"
             disabled={isPending}
-            className="primary-gradient !text-light-900 w-fit"
+            className="primary-gradient w-fit !text-light-900 "
           >
             {isPending ? (
               <>

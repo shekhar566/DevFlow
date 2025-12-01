@@ -30,7 +30,7 @@ const MobileNavigation = async () => {
       </SheetTrigger>
       <SheetContent
         side="left"
-        className="background-light900_dark200 border-none"
+        className="background-light900_dark200 w-[85vw] overflow-y-auto border-none sm:w-72"
       >
         <SheetTitle className="hidden">Navigation</SheetTitle>
         <Link href="/" className="flex items-center gap-1">
@@ -48,7 +48,7 @@ const MobileNavigation = async () => {
         <div className="no-scrollbar flex h-[calc(100vh-80px)] flex-col justify-between overflow-y-auto">
           <SheetClose asChild>
             <section className="flex h-full flex-col gap-6 pt-16">
-              <NavLinks />
+              <NavLinks isMobileNav={true} userId={userId} />
             </section>
           </SheetClose>
 
@@ -64,7 +64,7 @@ const MobileNavigation = async () => {
                 >
                   <Button
                     type="submit"
-                    className="base-medium w-fit !bg-transparent px-4 py-3"
+                    className="base-medium flex w-full items-center justify-center gap-2 whitespace-nowrap !bg-transparent px-4 py-3"
                   >
                     <LogOut className="size-5 text-black dark:text-white" />
                     <span className="text-dark300_light900">Logout</span>
@@ -75,7 +75,7 @@ const MobileNavigation = async () => {
               <>
                 <SheetClose asChild>
                   <Link href={ROUTES.SIGN_IN}>
-                    <Button className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
+                    <Button className="small-medium btn-secondary min-h-[41px] w-full whitespace-nowrap rounded-lg px-4 py-3 shadow-none">
                       <span className="primary-text-gradient">Log in</span>
                     </Button>
                   </Link>

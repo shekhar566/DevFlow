@@ -25,7 +25,12 @@ export async function generateMetadata({
 
   const { success, data: question } = await getQuestion({ questionId: id });
 
-  if (!success || !question) return {};
+  if (!success || !question) {
+    return {
+      title: "Question not found",
+      description: "This question does not exist.",
+    };
+  }
 
   return {
     title: question.title,
@@ -67,7 +72,9 @@ const QuestionDetails = async ({ params, searchParams }: RouteParams) => {
   const hasSavedQuestionPromise = hasSavedQuestion({
     questionId: question._id,
   });
+
   const { author, createdAt, answers, views, tags, content, title } = question;
+
   return (
     <>
       <div className="flex-start w-full flex-col">
@@ -79,7 +86,8 @@ const QuestionDetails = async ({ params, searchParams }: RouteParams) => {
             <UserAvatar
               id={author._id}
               name={author.name}
-              className="size-35"
+              imageUrl={author.image}
+              className="size-[22px]"
               fallbackClassName="text-[10px]"
             />
             <Link href={ROUTES.PROFILE(author._id)}>
@@ -99,6 +107,7 @@ const QuestionDetails = async ({ params, searchParams }: RouteParams) => {
                 hasVotedPromise={hasVotedPromise}
               />
             </Suspense>
+
             <Suspense fallback={<div>Loading...</div>}>
               <SaveQuestion
                 questionId={question._id}

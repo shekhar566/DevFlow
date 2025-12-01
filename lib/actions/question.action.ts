@@ -7,7 +7,7 @@ import {
   DeleteQuestionSchema,
   EditQuestionSchema,
   GetQuestionSchema,
-  IncrementViewsParams,
+  IncrementViewsSchema,
   PaginatedSearchParamsSchema,
 } from "../validations";
 import mongoose, { FilterQuery, Types } from "mongoose";
@@ -51,7 +51,7 @@ export async function createQuestion(
     }
 
     const tagIds: mongoose.Types.ObjectId[] = [];
-    const tagsQuestionDocuments = [];
+    const tagQuestionDocuments = [];
 
     for (const tag of tags) {
       const existingTag = await Tag.findOneAndUpdate(
@@ -61,13 +61,13 @@ export async function createQuestion(
       );
 
       tagIds.push(existingTag._id);
-      tagsQuestionDocuments.push({
+      tagQuestionDocuments.push({
         tag: existingTag._id,
         question: question._id,
       });
     }
 
-    await TagQuestion.insertMany(tagsQuestionDocuments, { session });
+    await TagQuestion.insertMany(tagQuestionDocuments, { session });
 
     await Question.findByIdAndUpdate(
       question._id,
@@ -93,7 +93,7 @@ export async function createQuestion(
     await session.abortTransaction();
     return handleError(error) as ErrorResponse;
   } finally {
-    session.endSession();
+    await session.endSession();
   }
 }
 
@@ -111,7 +111,7 @@ export async function editQuestion(
   }
 
   const { title, content, tags, questionId } = validationResult.params!;
-  const userId = validationResult?.session?.user?.id;
+  const userId = validationResult.session?.user?.id;
 
   const session = await mongoose.startSession();
   session.startTransaction();
@@ -124,7 +124,7 @@ export async function editQuestion(
     }
 
     if (question.author.toString() !== userId) {
-      throw new Error("Unauthorized");
+      throw new Error("You are not authorized to edit this question");
     }
 
     if (question.title !== title || question.content !== content) {
@@ -135,8 +135,8 @@ export async function editQuestion(
 
     const tagsToAdd = tags.filter(
       (tag) =>
-        !question.tags.some((t: ITagDoc) =>
-          t.name.toLowerCase().includes(tag.toLowerCase())
+        !question.tags.some(
+          (t: ITagDoc) => t.name.toLowerCase() === tag.toLowerCase()
         )
     );
 
@@ -209,7 +209,6 @@ export const getQuestion = cache(async function getQuestion(
   const validationResult = await action({
     params,
     schema: GetQuestionSchema,
-    authorize: true,
   });
 
   if (validationResult instanceof Error) {
@@ -295,9 +294,12 @@ export async function getRecommendedQuestions({
   };
 }
 
-export async function getQuestions(
-  params: PaginatedSearchParams
-): Promise<ActionResponse<{ questions: Question[]; isNext: boolean }>> {
+export async function getQuestions(params: PaginatedSearchParams): Promise<
+  ActionResponse<{
+    questions: Question[];
+    isNext: boolean;
+  }>
+> {
   const validationResult = await action({
     params,
     schema: PaginatedSearchParamsSchema,
@@ -308,38 +310,12 @@ export async function getQuestions(
   }
 
   const { page = 1, pageSize = 10, query, filter } = params;
+
   const skip = (Number(page) - 1) * pageSize;
-  const limit = Number(pageSize);
+  const limit = pageSize;
 
   const filterQuery: FilterQuery<typeof Question> = {};
-
-  if (filter === "recommended")
-    return { success: true, data: { questions: [], isNext: false } };
-
-  if (query) {
-    filterQuery.$or = [
-      { title: { $regex: new RegExp(query, "i") } },
-      { content: { $regex: new RegExp(query, "i") } },
-    ];
-  }
-
   let sortCriteria = {};
-
-  switch (filter) {
-    case "newest":
-      sortCriteria = { createdAt: -1 };
-      break;
-    case "unanswered":
-      filterQuery.answers = 0;
-      sortCriteria = { createdAt: -1 };
-      break;
-    case "popular":
-      sortCriteria = { upvotes: -1 };
-      break;
-    default:
-      sortCriteria = { createdAt: -1 };
-      break;
-  }
 
   try {
     // Recommendations
@@ -385,7 +361,9 @@ export async function getQuestions(
         sortCriteria = { createdAt: -1 };
         break;
     }
+
     const totalQuestions = await Question.countDocuments(filterQuery);
+
     const questions = await Question.find(filterQuery)
       .populate("tags", "name")
       .populate("author", "name image")
@@ -398,7 +376,10 @@ export async function getQuestions(
 
     return {
       success: true,
-      data: { questions: JSON.parse(JSON.stringify(questions)), isNext },
+      data: {
+        questions: JSON.parse(JSON.stringify(questions)),
+        isNext,
+      },
     };
   } catch (error) {
     return handleError(error) as ErrorResponse;
@@ -410,7 +391,7 @@ export async function incrementViews(
 ): Promise<ActionResponse<{ views: number }>> {
   const validationResult = await action({
     params,
-    schema: IncrementViewsParams,
+    schema: IncrementViewsSchema,
   });
 
   if (validationResult instanceof Error) {
@@ -443,7 +424,7 @@ export async function getHotQuestion(): Promise<ActionResponse<Question[]>> {
     await dbConnect();
 
     const questions = await Question.find()
-      .sort({ views: 1, upvotes: -1 })
+      .sort({ views: -1, upvotes: -1 })
       .limit(5);
 
     return {
@@ -513,6 +494,16 @@ export async function deleteQuestion(
     }
 
     await Question.findByIdAndDelete(questionId).session(session);
+
+    // log the interaction
+    after(async () => {
+      await createInteraction({
+        action: "delete",
+        actionId: questionId,
+        actionTarget: "question",
+        authorId: user?.id as string,
+      });
+    });
 
     await session.commitTransaction();
     session.endSession();
