@@ -1,4 +1,5 @@
 "use client";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,7 +14,6 @@ import {
 import { toast } from "@/hooks/use-toast";
 import { deleteAnswer } from "@/lib/actions/answer.action";
 import { deleteQuestion } from "@/lib/actions/question.action";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -26,35 +26,32 @@ const EditDeleteAction = ({ type, itemId }: Props) => {
   const router = useRouter();
 
   const handleEdit = async () => {
-    router.push(`/question/${itemId}/apply`);
+    router.push(`/questions/${itemId}/edit`);
   };
 
   const handleDelete = async () => {
     if (type === "Question") {
-      //  Call API to delete question
+      // Call API to delete question
       await deleteQuestion({ questionId: itemId });
 
       toast({
         title: "Question deleted",
-        variant: "destructive",
-        description: "Your question has been deleted successfully",
+        description: "Your question has been deleted successfully.",
       });
     } else if (type === "Answer") {
-      //  Call API to delete answer
+      // Call API to delete answer
       await deleteAnswer({ answerId: itemId });
+
       toast({
         title: "Answer deleted",
-        variant: "destructive",
-        description: "Your answer has been deleted successfully",
+        description: "Your answer has been deleted successfully.",
       });
     }
   };
 
   return (
     <div
-      className={cn(
-        `flex items-center justify-end gap-3 max-sm:w-full ${type === "Answer" && "gap-0 justify-center"}`
-      )}
+      className={`flex items-center justify-end gap-3 max-sm:w-full ${type === "Answer" && "justify-center gap-0"}`}
     >
       {type === "Question" && (
         <Image
@@ -66,11 +63,12 @@ const EditDeleteAction = ({ type, itemId }: Props) => {
           onClick={handleEdit}
         />
       )}
+
       <AlertDialog>
         <AlertDialogTrigger className="cursor-pointer">
           <Image src="/icons/trash.svg" alt="trash" width={14} height={14} />
         </AlertDialogTrigger>
-        <AlertDialogContent className="background-light800_dark300 border-none">
+        <AlertDialogContent className="background-light800_dark300">
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
@@ -80,9 +78,7 @@ const EditDeleteAction = ({ type, itemId }: Props) => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="btn-secondary border-none">
-              Cancel
-            </AlertDialogCancel>
+            <AlertDialogCancel className="btn">Cancel</AlertDialogCancel>
             <AlertDialogAction
               className="!border-primary-100 !bg-primary-500 !text-light-800"
               onClick={handleDelete}
