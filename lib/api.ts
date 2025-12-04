@@ -6,7 +6,7 @@ import ROUTES from "@/constants/routes";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ||
-  "https://dev-overflow-two-bay.vercel.app/api";
+  "https://care-connect-shekhar.vercel.app/api";
 
 export const api = {
   auth: {
