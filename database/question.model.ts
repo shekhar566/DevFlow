@@ -9,6 +9,9 @@ export interface IQuestion {
   upvotes: number;
   downvotes: number;
   author: Types.ObjectId;
+  patientAge: number;
+  gender: "Male" | "Female" | "Other";
+  urgency: "Low" | "Medium" | "Critical";
 }
 export interface IQuestionDoc extends IQuestion, Document {}
 const QuestionSchema = new Schema<IQuestion>(
@@ -21,6 +24,13 @@ const QuestionSchema = new Schema<IQuestion>(
     upvotes: { type: Number, default: 0 },
     downvotes: { type: Number, default: 0 },
     author: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    patientAge: { type: Number, required: true },
+    gender: { type: String, enum: ["Male", "Female", "Other"], required: true },
+    urgency: {
+      type: String,
+      enum: ["Low", "Medium", "Critical"],
+      required: true,
+    },
   },
   { timestamps: true }
 );

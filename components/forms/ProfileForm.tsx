@@ -1,3 +1,202 @@
+// "use client";
+
+// import { zodResolver } from "@hookform/resolvers/zod";
+// import { ReloadIcon } from "@radix-ui/react-icons";
+// import { useRouter } from "next/navigation";
+// import { useTransition } from "react";
+// import { useForm } from "react-hook-form";
+// import * as z from "zod";
+
+// import { Button } from "@/components/ui/button";
+// import {
+//   Form,
+//   FormControl,
+//   FormField,
+//   FormItem,
+//   FormLabel,
+//   FormMessage,
+// } from "@/components/ui/form";
+// import { Input } from "@/components/ui/input";
+// import ROUTES from "@/constants/routes";
+// import { toast } from "@/hooks/use-toast";
+// import { updateUser } from "@/lib/actions/user.action";
+// import { ProfileSchema } from "@/lib/validations";
+
+// import { Textarea } from "../ui/textarea";
+
+// interface Params {
+//   user: User;
+// }
+
+// const ProfileForm = ({ user }: Params) => {
+//   const router = useRouter();
+//   const [isPending, startTransition] = useTransition();
+
+//   const form = useForm<z.infer<typeof ProfileSchema>>({
+//     resolver: zodResolver(ProfileSchema),
+//     defaultValues: {
+//       name: user.name || "",
+//       username: user.username || "",
+//       portfolio: user.portfolio || "",
+//       location: user.location || "",
+//       bio: user.bio || "",
+//     },
+//   });
+
+//   const handleUpdateProfile = async (values: z.infer<typeof ProfileSchema>) => {
+//     startTransition(async () => {
+//       const result = await updateUser({
+//         ...values,
+//       });
+
+//       if (result.success) {
+//         toast({
+//           title: "Success",
+//           description: "Your profile has been updated successfully.",
+//         });
+
+//         router.push(ROUTES.PROFILE(user._id));
+//       } else {
+//         toast({
+//           title: `Error (${result.status})`,
+//           description: result.error?.message,
+//           variant: "destructive",
+//         });
+//       }
+//     });
+//   };
+
+//   return (
+//     <Form {...form}>
+//       <form
+//         onSubmit={form.handleSubmit(handleUpdateProfile)}
+//         className="mt-9 flex w-full flex-col gap-9"
+//       >
+//         <FormField
+//           control={form.control}
+//           name="name"
+//           render={({ field }) => (
+//             <FormItem className="flex flex-col gap-4">
+//               <FormLabel className="paragraph-semibold text-dark400_light800">
+//                 Name <span className="text-primary-500">*</span>
+//               </FormLabel>
+//               <FormControl>
+//                 <Input
+//                   className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
+//                   placeholder="Your Name"
+//                   {...field}
+//                 />
+//               </FormControl>
+//               <FormMessage />
+//             </FormItem>
+//           )}
+//         />
+
+//         <FormField
+//           control={form.control}
+//           name="username"
+//           render={({ field }) => (
+//             <FormItem className="flex flex-col gap-4">
+//               <FormLabel className="paragraph-semibold text-dark400_light800">
+//                 Username <span className="text-primary-500">*</span>
+//               </FormLabel>
+//               <FormControl>
+//                 <Input
+//                   className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
+//                   placeholder="Your username"
+//                   {...field}
+//                 />
+//               </FormControl>
+//               <FormMessage />
+//             </FormItem>
+//           )}
+//         />
+
+//         <FormField
+//           control={form.control}
+//           name="portfolio"
+//           render={({ field }) => (
+//             <FormItem className="flex flex-col gap-4">
+//               <FormLabel className="paragraph-semibold text-dark400_light800">
+//                 Portfolio Link
+//               </FormLabel>
+//               <FormControl>
+//                 <Input
+//                   type="url"
+//                   className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
+//                   placeholder="Your Portfolio link"
+//                   {...field}
+//                 />
+//               </FormControl>
+//               <FormMessage />
+//             </FormItem>
+//           )}
+//         />
+
+//         <FormField
+//           control={form.control}
+//           name="location"
+//           render={({ field }) => (
+//             <FormItem className="flex flex-col gap-4">
+//               <FormLabel className="paragraph-semibold text-dark400_light800">
+//                 Location <span className="text-primary-500">*</span>
+//               </FormLabel>
+//               <FormControl>
+//                 <Input
+//                   className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
+//                   placeholder="Where do you live?"
+//                   {...field}
+//                 />
+//               </FormControl>
+//               <FormMessage />
+//             </FormItem>
+//           )}
+//         />
+
+//         <FormField
+//           control={form.control}
+//           name="bio"
+//           render={({ field }) => (
+//             <FormItem className="flex flex-col gap-4">
+//               <FormLabel className="paragraph-semibold text-dark400_light800">
+//                 Bio <span className="text-primary-500">*</span>
+//               </FormLabel>
+//               <FormControl>
+//                 <Textarea
+//                   rows={5}
+//                   className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
+//                   placeholder="What's special about you?"
+//                   {...field}
+//                 />
+//               </FormControl>
+//               <FormMessage />
+//             </FormItem>
+//           )}
+//         />
+
+//         <div className="mt-7 flex justify-end">
+//           <Button
+//             type="submit"
+//             className="primary-gradient w-fit"
+//             disabled={isPending}
+//           >
+//             {isPending ? (
+//               <>
+//                 <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+//                 Submitting...
+//               </>
+//             ) : (
+//               <>Submit</>
+//             )}
+//           </Button>
+//         </div>
+//       </form>
+//     </Form>
+//   );
+// };
+
+// export default ProfileForm;
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,7 +224,7 @@ import { ProfileSchema } from "@/lib/validations";
 import { Textarea } from "../ui/textarea";
 
 interface Params {
-  user: User;
+  user: User; // Ensure you have this type defined in your types.d.ts
 }
 
 const ProfileForm = ({ user }: Params) => {
@@ -51,14 +250,14 @@ const ProfileForm = ({ user }: Params) => {
 
       if (result.success) {
         toast({
-          title: "Success",
-          description: "Your profile has been updated successfully.",
+          title: "Profile Updated",
+          description: "Your clinician profile is now up to date.",
         });
 
         router.push(ROUTES.PROFILE(user._id));
       } else {
         toast({
-          title: `Error (${result.status})`,
+          title: `Update Failed (${result.status})`,
           description: result.error?.message,
           variant: "destructive",
         });
@@ -72,18 +271,19 @@ const ProfileForm = ({ user }: Params) => {
         onSubmit={form.handleSubmit(handleUpdateProfile)}
         className="mt-9 flex w-full flex-col gap-9"
       >
+        {/* NAME FIELD */}
         <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
             <FormItem className="flex flex-col gap-4">
               <FormLabel className="paragraph-semibold text-dark400_light800">
-                Name <span className="text-primary-500">*</span>
+                Full Name <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl>
                 <Input
                   className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
-                  placeholder="Your Name"
+                  placeholder="e.g. Dr. Sarah Smith"
                   {...field}
                 />
               </FormControl>
@@ -92,6 +292,7 @@ const ProfileForm = ({ user }: Params) => {
           )}
         />
 
+        {/* USERNAME FIELD */}
         <FormField
           control={form.control}
           name="username"
@@ -103,7 +304,7 @@ const ProfileForm = ({ user }: Params) => {
               <FormControl>
                 <Input
                   className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
-                  placeholder="Your username"
+                  placeholder="Your unique handle"
                   {...field}
                 />
               </FormControl>
@@ -112,19 +313,20 @@ const ProfileForm = ({ user }: Params) => {
           )}
         />
 
+        {/* PORTFOLIO -> HOSPITAL LINK */}
         <FormField
           control={form.control}
           name="portfolio"
           render={({ field }) => (
             <FormItem className="flex flex-col gap-4">
               <FormLabel className="paragraph-semibold text-dark400_light800">
-                Portfolio Link
+                Hospital / Website Link
               </FormLabel>
               <FormControl>
                 <Input
                   type="url"
                   className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
-                  placeholder="Your Portfolio link"
+                  placeholder="Link to your hospital profile or research"
                   {...field}
                 />
               </FormControl>
@@ -133,18 +335,19 @@ const ProfileForm = ({ user }: Params) => {
           )}
         />
 
+        {/* LOCATION -> CLINIC LOCATION */}
         <FormField
           control={form.control}
           name="location"
           render={({ field }) => (
             <FormItem className="flex flex-col gap-4">
               <FormLabel className="paragraph-semibold text-dark400_light800">
-                Location <span className="text-primary-500">*</span>
+                Hospital / Location <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl>
                 <Input
                   className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
-                  placeholder="Where do you live?"
+                  placeholder="e.g. Mayo Clinic, Rochester, MN"
                   {...field}
                 />
               </FormControl>
@@ -153,19 +356,20 @@ const ProfileForm = ({ user }: Params) => {
           )}
         />
 
+        {/* BIO -> MEDICAL BACKGROUND */}
         <FormField
           control={form.control}
           name="bio"
           render={({ field }) => (
             <FormItem className="flex flex-col gap-4">
               <FormLabel className="paragraph-semibold text-dark400_light800">
-                Bio <span className="text-primary-500">*</span>
+                Medical Bio <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl>
                 <Textarea
                   rows={5}
                   className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 min-h-[56px] border"
-                  placeholder="What's special about you?"
+                  placeholder="Describe your medical specialty, background, and areas of interest..."
                   {...field}
                 />
               </FormControl>
@@ -182,11 +386,11 @@ const ProfileForm = ({ user }: Params) => {
           >
             {isPending ? (
               <>
-                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                Submitting...
+                <ReloadIcon className="mr-2 size-4 animate-spin" />
+                Saving Profile...
               </>
             ) : (
-              <>Submit</>
+              <>Save Profile</>
             )}
           </Button>
         </div>

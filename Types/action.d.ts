@@ -20,6 +20,9 @@ interface CreateQuestionParams {
   title: string;
   content: string;
   tags: string[];
+  patientAge: number;
+  gender: "Male" | "Female" | "Other";
+  urgency: "Low" | "Medium" | "Critical";
 }
 
 interface EditQuestionParams extends CreateQuestionParams {

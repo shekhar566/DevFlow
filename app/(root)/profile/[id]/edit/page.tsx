@@ -13,8 +13,7 @@ const Page = async () => {
 
   return (
     <>
-      <h1 className="h1-bold text-dark100_light900">Edit Profile</h1>
-
+      <h1 className="h1-bold text-dark100_light900">Edit Clinician Profile</h1>
       <ProfileForm user={data?.user as User} />
     </>
   );

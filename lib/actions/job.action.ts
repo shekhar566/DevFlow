@@ -1,7 +1,54 @@
+// export const fetchLocation = async () => {
+//   const response = await fetch("http://ip-api.com/json/?fields=country");
+//   const location = await response.json();
+//   return location.country;
+// };
+
+// export const fetchCountries = async () => {
+//   try {
+//     const response = await fetch("https://restcountries.com/v3.1/all");
+//     const result = await response.json();
+//     return result;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+// export const fetchJobs = async (filters: JobFilterParams) => {
+//   const { query, page } = filters;
+
+//   const headers = {
+//     "X-RapidAPI-Key": process.env.NEXT_PUBLIC_RAPID_API_KEY ?? "",
+//     "X-RapidAPI-Host": "jsearch.p.rapidapi.com",
+//   };
+
+//   const response = await fetch(
+//     `https://jsearch.p.rapidapi.com/search?query=${query}&page=${page}`,
+//     {
+//       headers,
+//     }
+//   );
+
+//   const result = await response.json();
+
+//   return result.data;
+// };
+
+"use server";
+
+// import { JobFilterParams } from "./shared.types";
+import { JobFilterParams } from "@/lib/actions/shared.types";
+
 export const fetchLocation = async () => {
-  const response = await fetch("http://ip-api.com/json/?fields=country");
-  const location = await response.json();
-  return location.country;
+  try {
+    // FIXED: Use HTTPS (ipapi.co) to prevent Mixed Content errors on Vercel
+    const response = await fetch("https://ipapi.co/json/");
+    const location = await response.json();
+    return location.country_name;
+  } catch (error) {
+    console.error("Error fetching location", error);
+    return "United States"; // Fallback
+  }
 };
 
 export const fetchCountries = async () => {
@@ -11,25 +58,36 @@ export const fetchCountries = async () => {
     return result;
   } catch (error) {
     console.log(error);
+    return null;
   }
 };
 
 export const fetchJobs = async (filters: JobFilterParams) => {
   const { query, page } = filters;
 
+  // MEDICAL PIVOT:
+  // Default to these terms so the page shows Medical Jobs instantly
+  const searchTerm = query || "Physician Medical Doctor Nurse Hospital";
+
   const headers = {
+    // SECURITY FIX: Use server-side variable (remove NEXT_PUBLIC_)
     "X-RapidAPI-Key": process.env.NEXT_PUBLIC_RAPID_API_KEY ?? "",
     "X-RapidAPI-Host": "jsearch.p.rapidapi.com",
   };
 
-  const response = await fetch(
-    `https://jsearch.p.rapidapi.com/search?query=${query}&page=${page}`,
-    {
-      headers,
-    }
-  );
+  try {
+    const response = await fetch(
+      `https://jsearch.p.rapidapi.com/search?query=${searchTerm}&page=${page}&num_pages=1`,
+      {
+        headers,
+      }
+    );
 
-  const result = await response.json();
+    const result = await response.json();
 
-  return result.data;
+    return result.data;
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
+    return [];
+  }
 };

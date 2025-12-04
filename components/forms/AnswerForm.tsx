@@ -146,8 +146,8 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
               <Image
                 src="/icons/stars.svg"
                 alt="Generate AI Answer"
-                width={12}
-                height={12}
+                width={25}
+                height={30}
                 className="object-contain"
               />
               Generate AI Answer

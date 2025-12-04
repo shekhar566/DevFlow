@@ -23,6 +23,9 @@ interface Question {
   answers: number;
   views: number;
   createdAt: Date;
+  patientAge: number;
+  gender: "Male" | "Female" | "Other";
+  urgency: "Low" | "Medium" | "Critical";
 }
 
 type ActionResponse<T = null> = {

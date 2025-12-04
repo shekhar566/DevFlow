@@ -66,6 +66,18 @@ export const AskQuestionSchema = z.object({
     )
     .min(1, { message: "At least one tag is required." })
     .max(3, { message: "Cannot add more than 3 tags." }),
+  patientAge: z.coerce
+    .number()
+    .min(0, { message: "Age must be valid." })
+    .max(120, { message: "Age must be valid." }),
+
+  gender: z.enum(["Male", "Female", "Other"], {
+    errorMap: () => ({ message: "Please select a gender." }),
+  }),
+
+  urgency: z.enum(["Low", "Medium", "Critical"], {
+    errorMap: () => ({ message: "Please select urgency level." }),
+  }),
 });
 
 export const UserSchema = z.object({
@@ -174,6 +186,23 @@ export const AIAnswerSchema = z.object({
     .string()
     .min(10, { message: "Answer has to have more than 100 characters." }),
   userAnswer: z.string().optional(),
+  patientAge: z.coerce
+    .number()
+    .min(0, { message: "Age must be valid." })
+    .max(120, { message: "Age must be valid." })
+    .optional(), // Optional because old questions might not have it
+
+  gender: z
+    .enum(["Male", "Female", "Other", "System"], {
+      errorMap: () => ({ message: "Please select a gender." }),
+    })
+    .optional(),
+
+  urgency: z
+    .enum(["Low", "Medium", "Critical"], {
+      errorMap: () => ({ message: "Please select urgency level." }),
+    })
+    .optional(),
 });
 
 export const CreateVoteSchema = z.object({

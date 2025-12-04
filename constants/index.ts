@@ -2,41 +2,43 @@ export const sidebarLinks = [
   {
     imgURL: "/icons/home.svg",
     route: "/",
-    label: "Home",
+    label: "Rounds", // Doctors do "Rounds" to check patients. Much better than "Home".
   },
   {
     imgURL: "/icons/users.svg",
     route: "/community",
-    label: "Community",
+    label: "Network", // "Community" is generic. "Network" implies professional connections.
   },
   {
     imgURL: "/icons/star.svg",
     route: "/collection",
-    label: "Collections",
+    label: "Saved Cases", // "Collections" sounds like a library. "Saved Cases" is clinical.
   },
   {
     imgURL: "/icons/suitcase.svg",
     route: "/jobs",
-    label: "Find Jobs",
+    label: "Career Hub", // "Find Jobs" sounds desperate. "Career Hub" sounds premium.
   },
   {
     imgURL: "/icons/tag.svg",
     route: "/tags",
-    label: "Tags",
+    label: "Specialties", // We don't use "Tags" in medicine; we use "Specialties" (Cardio, Neuro, etc).
   },
   {
     imgURL: "/icons/user.svg",
     route: "/profile",
-    label: "Profile",
+    label: "Profile", // Keep this.
   },
   {
     imgURL: "/icons/question.svg",
     route: "/ask-question",
-    label: "Ask a question",
+    label: "Post a Case", // We aren't asking generic questions; we are posting clinical cases.
   },
 ];
 
+// Keep your BADGE_CRITERIA exactly as it is below this.
 export const BADGE_CRITERIA = {
+  // ... keep your existing code here
   QUESTION_COUNT: {
     BRONZE: 1,
     SILVER: 5,

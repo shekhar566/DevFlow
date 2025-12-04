@@ -215,8 +215,9 @@ body {
     @apply shadow-light-100 dark:shadow-none;
   }
 
+  /* --- BRANDING UPDATE: CARECONNECT BLUE --- */
   .primary-gradient {
-    background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
+    background: linear-gradient(129deg, #3b82f6 0%, #60a5fa 100%);
   }
 
   .dark-gradient {
@@ -236,11 +237,12 @@ body {
   }
 
   .primary-text-gradient {
-    background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
+    background: linear-gradient(129deg, #3b82f6 0%, #60a5fa 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+  /* --------------------------------------- */
 
   .flex-center {
     @apply flex justify-center items-center;
@@ -289,14 +291,6 @@ body {
   [data-state="active"].tab {
     @apply bg-primary-100 text-primary-500 dark:bg-dark-300 dark:text-primary-500 !important;
   }
-
-  .dark-gradient {
-    background: linear-gradient(
-      232deg,
-      rgba(23, 28, 35, 0.41) 0%,
-      rgba(19, 22, 28, 0.7) 100%
-    );
-  }
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -330,8 +324,9 @@ body {
 }
 
 .active-theme {
-  filter: invert(53%) sepia(98%) saturate(3332%) hue-rotate(0deg)
-    brightness(104%) contrast(106%) !important;
+  /* This filter turns black icons into #3B82F6 (Medical Blue) */
+  filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(200deg)
+    brightness(118%) contrast(119%) !important;
 }
 
 .hash-span {
@@ -383,7 +378,7 @@ code {
   hyphens: auto;
 
   padding: 2px;
-  color: #ff7000 !important;
+  color: #3b82f6 !important;
 }
 
 .markdown pre {
@@ -438,4 +433,33 @@ code {
 
 .animate-fade-in {
   animation: fade-in 0.25s ease-in-out;
+}
+
+/* app/globals.css */
+
+/* ... existing code ... */
+
+/* FORCE NPROGRESS TO BE MEDICAL BLUE */
+#nprogress .bar {
+  background: #3b82f6 !important; /* CareConnect Blue */
+  height: 3px !important; /* Optional: make it a bit thicker */
+}
+
+#nprogress .peg {
+  box-shadow:
+    0 0 10px #3b82f6,
+    0 0 5px #3b82f6 !important; /* The glowing shadow */
+}
+
+#nprogress .spinner-icon {
+  border-top-color: #3b82f6 !important;
+  border-left-color: #3b82f6 !important;
+}
+
+.bg-auth-light {
+  background-image: url("/images/auth-light.jpg");
+}
+
+.bg-auth-dark {
+  background-image: url("/images/auth-dark.jpg");
 }

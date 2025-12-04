@@ -103,8 +103,8 @@ const DataRenderer = <T,>({
     return (
       <StateSkeleton
         image={{
-          light: "/images/light-illustration.png",
-          dark: "/images/dark-illustration.png",
+          light: "/icons/light-illustration.svg",
+          dark: "/icons/dark-illustration.svg",
           alt: "Empty state illustration",
         }}
         title={empty.title}

@@ -57,8 +57,8 @@ const SaveQuestion = ({
   return (
     <Image
       src={hasSaved ? "/icons/star-filled.svg" : "/icons/star-red.svg"}
-      width={18}
-      height={18}
+      width={20}
+      height={20}
       alt="save"
       className={`cursor-pointer ${isLoading && "opacity-50"}`}
       aria-label="Save question"
