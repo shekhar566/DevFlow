@@ -124,6 +124,7 @@
 // export default RootLayout;
 
 // 1. Rename 'Plus_Jakarta_Sans' to 'PlusJakartaSans' during import
+import type { Metadata } from "next";
 import { Inter, Plus_Jakarta_Sans as PlusJakartaSans } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import { ReactNode } from "react";
@@ -140,14 +141,13 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-// 2. Use the new name here
 const jakarta = PlusJakartaSans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-jakarta",
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "CareConnect | Clinical Case Consultation",
   description:
     "CareConnect is a secure medical platform for clinicians to share cases, seek second opinions, and collaborate on patient rounds.",
@@ -176,10 +176,16 @@ export const metadata = {
     telephone: false,
   },
 
+  // FIXED: Updated paths based on your file structure
   icons: {
-    icon: "/images/site-logo.svg",
-    shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: [
+      // 1. Priority: Your custom SVG in public/images/
+      { url: "/icons/favicon.svg", type: "image/svg+xml" },
+      // 2. Fallback: The standard ICO file in app/ (Next.js serves this at root)
+      { url: "/favicon.ico" },
+    ],
+    // 3. Apple Touch Icon in public/
+    apple: [{ url: "/apple-touch-icon.png" }],
   },
 
   themeColor: "#0F1117",
@@ -198,7 +204,6 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
         />
       </head>
       <SessionProvider session={session}>
-        {/* CHANGED: Swapped spaceGrotesk for jakarta */}
         <body className={`${inter.variable} ${jakarta.variable} antialiased`}>
           <ThemeProvider
             attribute="class"
@@ -206,7 +211,7 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
             enableSystem
             disableTransitionOnChange
           >
-            {/* Make sure to add color="#3B82F6" to TopLoader if it's still orange */}
+            {/* TopLoader for smooth page transitions */}
             <TopLoader />
             {children}
           </ThemeProvider>

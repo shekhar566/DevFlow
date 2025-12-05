@@ -34,15 +34,10 @@ const MobileNavigation = async () => {
       >
         <SheetTitle className="hidden">Navigation</SheetTitle>
         <Link href="/" className="flex items-center gap-1">
-          <Image
-            src="/images/site-logo.svg"
-            width={23}
-            height={23}
-            alt="logo"
-          />
+          <Image src="/images/favicon.svg" width={23} height={23} alt="logo" />
 
           <p className="h2-bold font-space-grotesk text-dark-100 dark:text-light-900 ">
-            Dev<span className="text-primary-500">OverFlow</span>
+            Care<span className="text-primary-500">Connect</span>
           </p>
         </Link>
         <div className="no-scrollbar flex h-[calc(100vh-80px)] flex-col justify-between overflow-y-auto">
