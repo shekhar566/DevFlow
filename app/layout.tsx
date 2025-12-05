@@ -180,7 +180,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       // 1. Priority: Your custom SVG in public/images/
-      { url: "/icons/favicon.svg", type: "image/svg+xml" },
+      { url: "/images/Group.svg", type: "image/svg+xml" },
       // 2. Fallback: The standard ICO file in app/ (Next.js serves this at root)
       { url: "/favicon.ico" },
     ],
