@@ -148,6 +148,7 @@ const jakarta = PlusJakartaSans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://care-connect-shekhar.vercel.app"),
   title: "CareConnect | Clinical Case Consultation",
   description:
     "CareConnect is a secure medical platform for clinicians to share cases, seek second opinions, and collaborate on patient rounds.",
